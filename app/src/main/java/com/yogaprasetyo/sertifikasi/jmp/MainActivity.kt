@@ -5,8 +5,6 @@ import android.content.ContentResolver
 import android.content.Intent
 import android.content.Intent.ACTION_PICK
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationListener
@@ -26,7 +24,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import java.io.*
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
+import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -65,14 +66,8 @@ class MainActivity : AppCompatActivity() {
     private fun radioCheckedListener() {
         binding.rgGender.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
-                binding.rbMan.id -> {
-                    gender = binding.rbMan.text.toString()
-                    Toast.makeText(this, gender, Toast.LENGTH_LONG).show()
-                }
-                binding.rbWoman.id -> {
-                    gender = binding.rbWoman.text.toString()
-                    Toast.makeText(this, gender, Toast.LENGTH_LONG).show()
-                }
+                binding.rbMan.id -> gender = binding.rbMan.text.toString()
+                binding.rbWoman.id -> gender = binding.rbWoman.text.toString()
             }
         }
     }
@@ -182,25 +177,7 @@ class MainActivity : AppCompatActivity() {
         outputStream.close()
         inputStream.close()
 
-        return reduceFileImage(myFile)
-    }
-
-    /**
-     * Reducing image until less then or equal 500Kb
-     * */
-    private fun reduceFileImage(file: File): File {
-        val bitmap = BitmapFactory.decodeFile(file.path)
-        var compressQuality = 100
-        var streamLength: Int
-        do {
-            val bmpStream = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, bmpStream)
-            val bmpPicByteArray = bmpStream.toByteArray()
-            streamLength = bmpPicByteArray.size
-            compressQuality -= 5
-        } while (streamLength > 500000)
-        bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, FileOutputStream(file))
-        return file
+        return myFile
     }
 
     /**
@@ -293,7 +270,7 @@ class MainActivity : AppCompatActivity() {
             override fun onProviderDisabled(provider: String) {
                 Toast.makeText(
                     this@MainActivity,
-                    "Nyalakan GPS kamu untuk mendapatkan data!",
+                    "Nyalakan GPS dan internet kamu untuk mendapatkan data!",
                     Toast.LENGTH_LONG
                 ).show()
             }

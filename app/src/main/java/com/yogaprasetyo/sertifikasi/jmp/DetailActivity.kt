@@ -1,14 +1,9 @@
 package com.yogaprasetyo.sertifikasi.jmp
 
-import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Bundle
-import android.util.Base64
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.yogaprasetyo.sertifikasi.jmp.databinding.ActivityDetailBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.io.File
 
 /**
@@ -44,7 +39,9 @@ class DetailActivity : AppCompatActivity() {
             Lokasi Pendaftaran: $location""".trimIndent()
 
         binding.etData.setText(fullData)
-        binding.ivProfile.setImageURI(Uri.fromFile(File(imagePath)))
+        Glide.with(this)
+            .load(File(imagePath))
+            .into(binding.ivProfile)
     }
 
     companion object {

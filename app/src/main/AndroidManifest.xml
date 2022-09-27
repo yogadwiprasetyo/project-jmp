@@ -22,13 +22,13 @@
         android:theme="@style/Theme.PendaftaranMahasiswaBaru"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".ListUserActivity"
             android:exported="false" />
         <activity
             android:name=".DetailActivity"
             android:exported="false" />
         <activity
-            android:name=".ListUserActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

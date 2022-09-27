@@ -1,9 +1,9 @@
 package com.yogaprasetyo.sertifikasi.jmp
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.yogaprasetyo.sertifikasi.jmp.databinding.ItemUserBinding
 import java.io.File
 
@@ -49,7 +49,10 @@ class UserAdapter(private val onItemClickCallback: OnItemClickCallback) :
                 tvName.text = "Nama: $name"
                 tvPhone.text = "No. HP: $phone"
                 tvGender.text = "Jenis kelamin: $gender"
-                binding.ivProfile.setImageURI(Uri.fromFile(File(imagePath)))
+                Glide
+                    .with(itemView.context)
+                    .load(File(imagePath))
+                    .into(binding.ivProfile)
             }
 
             // Clicked one item then move to Detail Activity
